@@ -1,3 +1,8 @@
+/***********************************************
+ * @author Hrishikesh
+ * @version 1.0
+ * @since 06-06-2021
+ ***********************************************/
 package empwage;
 import java.util.Random;
 public class WageCalculator {
