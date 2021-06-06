@@ -4,7 +4,16 @@ public class WageCalculator {
 	private final int IS_PRESENT=1;
 	private final int IS_ABSENT=0;
 	private final int WAGE_PER_HR=20;
-	private final int FULL_DAY_HRS=8;
+	private int dayHrs;
+	
+	/**
+	 * @param dayHrs
+	 * Assigns hours per day for different type of employees
+	 */
+	WageCalculator(int dayHrs){
+		this.dayHrs=dayHrs;
+	}
+	
 	
 	/**
 	 * Displays Welcome message on console
@@ -29,15 +38,17 @@ public class WageCalculator {
 	 * @return Wage per day
 	 */
 	private int calcDailyWage() {
-	    	int dailyWage = WAGE_PER_HR*FULL_DAY_HRS;
+	    	int dailyWage = WAGE_PER_HR*dayHrs;
 	    	return dailyWage;
 	}
 
 	public static void main(String[] args) {
-		WageCalculator w =new WageCalculator();
-		w.displayWelcome();
-		w.attendence();
-		w.calcDailyWage();
+		WageCalculator fullTimeEmp =new WageCalculator(8);
+		fullTimeEmp.displayWelcome();
+		fullTimeEmp.attendence();
+		fullTimeEmp.calcDailyWage();
+		WageCalculator partTimeEmp=new WageCalculator(4);
+		partTimeEmp.calcDailyWage();
 
 	}
 
