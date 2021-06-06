@@ -5,6 +5,7 @@ public class WageCalculator {
 	private final int IS_ABSENT=0;
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
+	private final int WORK_DAYS_IN_MONTH=20;
 	private final int WAGE_PER_HR=20;
 	private int dayHrs;
 	
@@ -43,6 +44,13 @@ public class WageCalculator {
 	    	int dailyWage = WAGE_PER_HR*dayHrs;
 	    	return dailyWage;
 	}
+	/**
+	 * @return monthly wage of the employee
+	 */
+	private int calcMonthlyWage() {
+		int monthlyWage = WORK_DAYS_IN_MONTH*WAGE_PER_HR*dayHrs;
+		return monthlyWage;
+	}
 	
 	public static void main(String[] args) {
 		displayWelcome();
@@ -56,9 +64,11 @@ public class WageCalculator {
 		switch (ran) {
     	case IS_FULLTIME:
     		fullTimeEmp.calcDailyWage();
+    		fullTimeEmp.calcMonthlyWage();
     		break;
     	case IS_PARTTIME:
     		partTimeEmp.calcDailyWage();
+    		partTimeEmp.calcMonthlyWage();
     		break;
     	}
 		
