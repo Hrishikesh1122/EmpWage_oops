@@ -3,6 +3,8 @@ import java.util.Random;
 public class WageCalculator {
 	private final int IS_PRESENT=1;
 	private final int IS_ABSENT=0;
+	private static final int IS_FULLTIME=1;
+	private static final int IS_PARTTIME=2;
 	private final int WAGE_PER_HR=20;
 	private int dayHrs;
 	
@@ -18,7 +20,7 @@ public class WageCalculator {
 	/**
 	 * Displays Welcome message on console
 	 */
-	private void displayWelcome() {
+	private static void displayWelcome() {
 		System.out.println("Welcome to Employee Wage calculator");
 	}
 	/**
@@ -41,15 +43,25 @@ public class WageCalculator {
 	    	int dailyWage = WAGE_PER_HR*dayHrs;
 	    	return dailyWage;
 	}
-
+	
 	public static void main(String[] args) {
+		displayWelcome();
 		WageCalculator fullTimeEmp =new WageCalculator(8);
-		fullTimeEmp.displayWelcome();
+		WageCalculator partTimeEmp=new WageCalculator(4);	
+		Random random=new Random();
 		fullTimeEmp.attendence();
-		fullTimeEmp.calcDailyWage();
-		WageCalculator partTimeEmp=new WageCalculator(4);
-		partTimeEmp.calcDailyWage();
-
+		partTimeEmp.attendence();
+		int ran;
+		ran=1+random.nextInt(2);
+		switch (ran) {
+    	case IS_FULLTIME:
+    		fullTimeEmp.calcDailyWage();
+    		break;
+    	case IS_PARTTIME:
+    		partTimeEmp.calcDailyWage();
+    		break;
+    	}
+		
 	}
 
 }
