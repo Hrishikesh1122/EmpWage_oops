@@ -15,9 +15,14 @@ public class WageCalculator {
 	private int workDaysInMonth;
 	private int wagePerHr;
 	private String companyName;
+	
 	/**
-	 * @param dayHrs
-	 * Assigns hours per day for different type of employees
+	 * This constructor assigns company name and their standard working hours.
+	 * @param companyName
+	 * @param fullDayHrs
+	 * @param partDayHrs
+	 * @param workDaysInMonth
+	 * @param wagePerHr
 	 */
 	WageCalculator(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr){
 		this.companyName=companyName;
