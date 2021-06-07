@@ -1,7 +1,7 @@
 /***********************************************
- * @author Hrishikesh
+ * @author Hrishikesh Ugavekar
  * @version 1.0
- * @since 06-06-2021
+ * @since 07-06-2021
  ***********************************************/
 package empwage;
 import java.util.Random;
@@ -10,16 +10,21 @@ public class WageCalculator {
 	private final int IS_ABSENT=0;
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
-	private static final int WORK_DAYS_IN_MONTH=20;
-	private final int WAGE_PER_HR=20;
-	private int dayHrs;
-	
+	private int fullDayHrs;
+	private int partDayHrs;
+	private int workDaysInMonth;
+	private int wagePerHr;
+	private String companyName;
 	/**
 	 * @param dayHrs
 	 * Assigns hours per day for different type of employees
 	 */
-	WageCalculator(int dayHrs){
-		this.dayHrs=dayHrs;
+	WageCalculator(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr){
+		this.companyName=companyName;
+		this.fullDayHrs=fullDayHrs;
+		this.partDayHrs=partDayHrs;
+		this.workDaysInMonth=workDaysInMonth;
+		this.wagePerHr=wagePerHr;
 	}
 	
 	
@@ -28,6 +33,16 @@ public class WageCalculator {
 	 */
 	private static void displayWelcome() {
 		System.out.println("Welcome to Employee Wage calculator");
+	}
+	/**
+	 * Displays information about company's standard working hours
+	 */
+	private void dispCompanyInfo() {
+		System.out.println("Company name   : "+companyName);
+		System.out.println("Full Day hours : "+fullDayHrs);
+		System.out.println("Part Day hours : "+partDayHrs);
+		System.out.println("Working days in month : "+workDaysInMonth);
+		System.out.println("Wage Per Hr : "+wagePerHr);
 	}
 	/**
 	 * @return 1 if employee is present otherwise 0
@@ -46,39 +61,44 @@ public class WageCalculator {
 	 * @return Wage per day
 	 */
 	private int calcDailyWage() {
-	    	int dailyWage = WAGE_PER_HR*dayHrs;
+	    	int dailyWage = wagePerHr*fullDayHrs;
 	    	return dailyWage;
 	}
+	/**
+	 * @return Part time wage per day
+	 */
+	private int calcPartDayWage() {
+    	int partTimeDailyWage = wagePerHr*partDayHrs;
+    	return partTimeDailyWage;
+}
 	/**
 	 * @return monthly wage of the employee
 	 */
 	private int calcMonthlyWage() {
-		int monthlyWage = WORK_DAYS_IN_MONTH*WAGE_PER_HR*dayHrs;
+		int monthlyWage = workDaysInMonth*wagePerHr*fullDayHrs;
 		return monthlyWage;
 	}
 	/**
 	 * @return Total wage 
 	 * Calculating wages till number of hrs reaches 100 or Working days reaches 20
 	 */
-	private static int calcWages() {
+	private  int calcWages() {
 		int ran;
 		int TotalWage=0;
 		int countHrs=0;
 		int countDays=0;
-		WageCalculator fullTimeEmp1 =new WageCalculator(8);
-		WageCalculator partTimeEmp1=new WageCalculator(4);
 		Random random=new Random();
 		ran=1+random.nextInt(2);
-		while(countHrs<100 && countDays<WORK_DAYS_IN_MONTH)
+		while(countHrs<100 && countDays<workDaysInMonth)
 		{
 			switch (ran) {
     		case IS_FULLTIME:
-    			TotalWage+=fullTimeEmp1.calcDailyWage();
+    			TotalWage+=calcDailyWage();
     			countHrs+=8;
     			countDays++;
     			break;
     		case IS_PARTTIME:
-    			TotalWage+=partTimeEmp1.calcDailyWage();
+    			TotalWage+=calcPartDayWage();
     			countHrs+=4;
     			countDays++;
     			break;
@@ -90,15 +110,19 @@ public class WageCalculator {
 	
 	public static void main(String[] args) {
 		displayWelcome();
-		WageCalculator fullTimeEmp =new WageCalculator(8);
-		WageCalculator partTimeEmp=new WageCalculator(4);	
-		fullTimeEmp.attendence();
-		partTimeEmp.attendence();
-		fullTimeEmp.calcDailyWage();
-		partTimeEmp.calcDailyWage();
-		fullTimeEmp.calcMonthlyWage();
-		partTimeEmp.calcMonthlyWage();
-		calcWages();				
+		WageCalculator company1=new WageCalculator("D Mart",8,4,25,30);
+		company1.dispCompanyInfo();
+		company1.attendence();
+		company1.calcMonthlyWage();
+		company1.calcDailyWage();
+		company1.calcWages();
+		
+		WageCalculator company2=new WageCalculator("Reliance Fresh",10,6,28,300);
+		company2.dispCompanyInfo();
+		company2.attendence();
+		company2.calcMonthlyWage();
+		company2.calcDailyWage();
+		company2.calcWages();
 	}
 
 }
