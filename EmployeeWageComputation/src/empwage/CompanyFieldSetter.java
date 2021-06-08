@@ -7,20 +7,11 @@
  ******************************************************/
 package empwage;
 public class CompanyFieldSetter {
+	public String companyName;
 	public int fullDayHrs;
 	public int partDayHrs;
 	public int workDaysInMonth;
 	public int wagePerHr;
-	public int maxWorkingHrs;
-	public int getMaxWorkingHrs() {
-		return maxWorkingHrs;
-	}
-
-	public void setMaxWorkingHrs(int maxWorkingHrs) {
-		this.maxWorkingHrs = maxWorkingHrs;
-	}
-
-	public String companyName;
 	
 
 	/**
@@ -39,6 +30,26 @@ public class CompanyFieldSetter {
 		this.wagePerHr=wagePerHr;
 		this.maxWorkingHrs=maxWorkingHrs;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "CompanyFieldSetter [companyName=" + companyName + ", fullDayHrs=" + fullDayHrs + ", partDayHrs="
+				+ partDayHrs + ", workDaysInMonth=" + workDaysInMonth + ", wagePerHr=" + wagePerHr + ", maxWorkingHrs="
+				+ maxWorkingHrs + ", totalEmpWage=" + totalEmpWage + "]";
+	}
+
+	public int maxWorkingHrs;
+	public int totalEmpWage;
+	public int getMaxWorkingHrs() {
+		return maxWorkingHrs;
+	}
+
+	public void setMaxWorkingHrs(int maxWorkingHrs) {
+		this.maxWorkingHrs = maxWorkingHrs;
+	}
+
+	
 	
 	public int getFullDayHrs() {
 		return fullDayHrs;
@@ -80,11 +91,8 @@ public class CompanyFieldSetter {
 		this.companyName = companyName;
 	}
 
-	public int totalEmpWage;
-	@Override
-	public String toString() {
-		return "CompanyFieldSetter [totalEmpWage=" + totalEmpWage + "]";
-	}
+	
+	
 
 	public int getTotalEmpWage() {
 		return totalEmpWage;
