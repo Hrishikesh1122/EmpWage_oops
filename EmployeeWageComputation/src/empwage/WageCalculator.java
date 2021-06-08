@@ -1,13 +1,14 @@
 /***********************************************
  * @author Hrishikesh Ugavekar
  * @version 1.1
- * @since 07-06-2021
+ * @since 08-06-2021
  ***********************************************/
 package empwage;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 public class WageCalculator implements IWageCalculator {
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
@@ -87,15 +88,23 @@ public class WageCalculator implements IWageCalculator {
 	    CompanyMap.put(companyName,companyList);
 	    System.out.println(companyList);			
 	}
-	
+	public int getTotalWage(String companyName) {
+		return CompanyMap.get(companyName).totalEmpWage;
+	}
 	
 	public static void main(String[] args) {
 		displayWelcome();
+		Scanner sc = new Scanner(System.in);
 		WageCalculator companies=new WageCalculator();
 		companies.setCompanyFields("Dmart",8,4,20,200,100);
 		companies.setCompanyFields("More",10,5,20,250,100);
 		companies.storeWagesToCollection();
 		
+		String userInput;
+		System.out.println("Enter company name to get total wage :");
+		userInput=sc.next();
+		System.out.println("Total wage of company "+userInput+" is: "+companies.getTotalWage(userInput));
+		sc.close();
 	}
 
 }
