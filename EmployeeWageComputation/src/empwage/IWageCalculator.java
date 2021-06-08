@@ -10,4 +10,5 @@ public interface IWageCalculator {
 	void setCompanyFields(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr,int maxWorkingHrs );
 	int calcWages(CompanyFieldSetter CompanyFieldSetter);
 	void storeWagesToCollection();
+	
 }

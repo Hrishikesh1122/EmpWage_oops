@@ -4,17 +4,22 @@
  * @since 07-06-2021
  ***********************************************/
 package empwage;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 public class WageCalculator implements IWageCalculator {
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
 	
-	//ArrayList of objects of class CompanyFieldSetter
+	//List of objects of class CompanyFieldSetter
 	private  static LinkedList<CompanyFieldSetter> CompanyList;
+	//Hash map to store total wage along with company name
+	private Map<String,CompanyFieldSetter> CompanyMap;
 	public WageCalculator()
 	{
 		CompanyList=new LinkedList<>();
+		CompanyMap=new HashMap<>();
 	}
 	
 	/**
@@ -79,10 +84,10 @@ public class WageCalculator implements IWageCalculator {
 	public void setCompanyFields(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr,int maxWorkingHrs ) {	
 		CompanyFieldSetter companyList = new CompanyFieldSetter(companyName,fullDayHrs,partDayHrs,workDaysInMonth,wagePerHr,maxWorkingHrs);
 	    CompanyList.add(companyList);
-	    System.out.println(companyList);
-	   
-			
+	    CompanyMap.put(companyName,companyList);
+	    System.out.println(companyList);			
 	}
+	
 	
 	public static void main(String[] args) {
 		displayWelcome();
@@ -90,6 +95,7 @@ public class WageCalculator implements IWageCalculator {
 		companies.setCompanyFields("Dmart",8,4,20,200,100);
 		companies.setCompanyFields("More",10,5,20,250,100);
 		companies.storeWagesToCollection();
+		
 	}
 
 }
