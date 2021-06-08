@@ -6,32 +6,12 @@
 package empwage;
 import java.util.Random;
 public class WageCalculator {
-	private final int IS_PRESENT=1;
-	private final int IS_ABSENT=0;
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
-	private int fullDayHrs;
-	private int partDayHrs;
-	private int workDaysInMonth;
-	private int wagePerHr;
-	private String companyName;
 	
-	/**
-	 * This constructor assigns company name and their standard working hours.
-	 * @param companyName
-	 * @param fullDayHrs
-	 * @param partDayHrs
-	 * @param workDaysInMonth
-	 * @param wagePerHr
-	 */
-	WageCalculator(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr){
-		this.companyName=companyName;
-		this.fullDayHrs=fullDayHrs;
-		this.partDayHrs=partDayHrs;
-		this.workDaysInMonth=workDaysInMonth;
-		this.wagePerHr=wagePerHr;
-	}
-	
+	private int companyIndex=0;
+	//Array of objects of class CompanyFieldSetter
+	CompanyFieldSetter CompanyArray[]=new CompanyFieldSetter[10];
 	
 	/**
 	 * Displays Welcome message on console
@@ -39,71 +19,31 @@ public class WageCalculator {
 	private static void displayWelcome() {
 		System.out.println("Welcome to Employee Wage calculator");
 	}
-	/**
-	 * Displays information about company's standard working hours
-	 */
-	private void dispCompanyInfo() {
-		System.out.println("Company name   : "+companyName);
-		System.out.println("Full Day hours : "+fullDayHrs);
-		System.out.println("Part Day hours : "+partDayHrs);
-		System.out.println("Working days in month : "+workDaysInMonth);
-		System.out.println("Wage Per Hr : "+wagePerHr);
-	}
-	/**
-	 * @return 1 if employee is present otherwise 0
-	 */
-	private int attendence() {
-    	int ran;
-    	Random random=new Random();
-    	ran=random.nextInt(2);
-		System.out.println(ran);
-		if(ran==IS_PRESENT)
-			return IS_PRESENT;
-		else
-			return IS_ABSENT;
-    }
-	/**
-	 * @return Wage per day
-	 */
-	private int calcDailyWage() {
-	    	int dailyWage = wagePerHr*fullDayHrs;
-	    	return dailyWage;
-	}
-	/**
-	 * @return Part time wage per day
-	 */
-	private int calcPartDayWage() {
-    	int partTimeDailyWage = wagePerHr*partDayHrs;
-    	return partTimeDailyWage;
-}
-	/**
-	 * @return monthly wage of the employee
-	 */
-	private int calcMonthlyWage() {
-		int monthlyWage = workDaysInMonth*wagePerHr*fullDayHrs;
-		return monthlyWage;
-	}
+
 	/**
 	 * @return Total wage 
-	 * Calculating wages till number of hrs reaches 100 or Working days reaches 20
+	 * Calculates total wages till a condition is reached (Different conditions for different companies)
 	 */
-	private  int calcWages() {
+	private  int calcWages(CompanyFieldSetter CompanyFieldSetter) {
 		int ran;
 		int TotalWage=0;
 		int countHrs=0;
 		int countDays=0;
+		int DailyWage=0;
 		Random random=new Random();
 		ran=1+random.nextInt(2);
-		while(countHrs<100 && countDays<workDaysInMonth)
+		while(countHrs<CompanyFieldSetter.maxWorkingHrs && countDays<CompanyFieldSetter.workDaysInMonth)
 		{
 			switch (ran) {
     		case IS_FULLTIME:
-    			TotalWage+=calcDailyWage();
+    			DailyWage=CompanyFieldSetter.fullDayHrs*CompanyFieldSetter.wagePerHr;
+    			TotalWage+=DailyWage;
     			countHrs+=8;
     			countDays++;
     			break;
     		case IS_PARTTIME:
-    			TotalWage+=calcPartDayWage();
+    			DailyWage=CompanyFieldSetter.partDayHrs*CompanyFieldSetter.wagePerHr;
+    			TotalWage+=DailyWage;
     			countHrs+=4;
     			countDays++;
     			break;
@@ -112,22 +52,36 @@ public class WageCalculator {
 		}
 		return TotalWage;
 	}
+	/**
+	 * Stores total wage in Company Array
+	 */
+	private void storeWagesToArray() {
+		for (int i=0;i<companyIndex;i++)
+		{
+			CompanyArray[i].setTotalEmpWage(this.calcWages(CompanyArray[i]));
+			System.out.println(CompanyArray[i]);
+		}
+	}
+	/**
+	 * Sets fields to objects in CompanyArray
+	 * @param companyName
+	 * @param fullDayHrs
+	 * @param partDayHrs
+	 * @param workDaysInMonth
+	 * @param wagePerHr
+	 * @param maxWorkingHrs
+	 */
+	private void setCompanyFields(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr,int maxWorkingHrs ) {
+			CompanyArray[companyIndex]=new CompanyFieldSetter(companyName,fullDayHrs,partDayHrs,workDaysInMonth,wagePerHr,maxWorkingHrs);
+			companyIndex++;
+	}
 	
 	public static void main(String[] args) {
 		displayWelcome();
-		WageCalculator company1=new WageCalculator("D Mart",8,4,25,30);
-		company1.dispCompanyInfo();
-		company1.attendence();
-		company1.calcMonthlyWage();
-		company1.calcDailyWage();
-		company1.calcWages();
-		
-		WageCalculator company2=new WageCalculator("Reliance Fresh",10,6,28,300);
-		company2.dispCompanyInfo();
-		company2.attendence();
-		company2.calcMonthlyWage();
-		company2.calcDailyWage();
-		company2.calcWages();
+		WageCalculator companies=new WageCalculator();
+		companies.setCompanyFields("Dmart",8,4,20,200,100);
+		companies.setCompanyFields("More",10,5,20,250,100);
+		companies.storeWagesToArray();
 	}
 
 }
