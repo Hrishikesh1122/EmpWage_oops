@@ -1,11 +1,11 @@
 /***********************************************
  * @author Hrishikesh Ugavekar
- * @version 1.0
+ * @version 1.1
  * @since 07-06-2021
  ***********************************************/
 package empwage;
 import java.util.Random;
-public class WageCalculator {
+public class WageCalculator implements IWageCalculator {
 	private static final int IS_FULLTIME=1;
 	private static final int IS_PARTTIME=2;
 	
@@ -24,7 +24,7 @@ public class WageCalculator {
 	 * @return Total wage 
 	 * Calculates total wages till a condition is reached (Different conditions for different companies)
 	 */
-	private  int calcWages(CompanyFieldSetter CompanyFieldSetter) {
+	public  int calcWages(CompanyFieldSetter CompanyFieldSetter) {
 		int ran;
 		int TotalWage=0;
 		int countHrs=0;
@@ -55,7 +55,7 @@ public class WageCalculator {
 	/**
 	 * Stores total wage in Company Array
 	 */
-	private void storeWagesToArray() {
+	public void storeWagesToArray() {
 		for (int i=0;i<companyIndex;i++)
 		{
 			CompanyArray[i].setTotalEmpWage(this.calcWages(CompanyArray[i]));
@@ -71,7 +71,7 @@ public class WageCalculator {
 	 * @param wagePerHr
 	 * @param maxWorkingHrs
 	 */
-	private void setCompanyFields(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr,int maxWorkingHrs ) {
+	public void setCompanyFields(String companyName,int fullDayHrs,int partDayHrs,int workDaysInMonth,int wagePerHr,int maxWorkingHrs ) {
 			CompanyArray[companyIndex]=new CompanyFieldSetter(companyName,fullDayHrs,partDayHrs,workDaysInMonth,wagePerHr,maxWorkingHrs);
 			companyIndex++;
 	}
